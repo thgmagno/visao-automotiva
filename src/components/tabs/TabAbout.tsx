@@ -41,6 +41,7 @@ export function TabAbout() {
               <li>Visualização de modelos e versões por marca</li>
               <li>Consulta por ano/modelo com exibição de preço médio FIPE</li>
               <li>UI responsiva e intuitiva</li>
+              <li>Histórico de buscas com tempo relativo e navegação rápida</li>
             </ul>
           </AccordionContent>
         </AccordionItem>
@@ -63,6 +64,10 @@ export function TabAbout() {
               <li>
                 <strong>Cache inteligente com tags únicas</strong> para cada
                 requisição, otimizando o uso da API
+              </li>
+              <li>
+                <strong>Histórico local</strong> que melhora a experiência de
+                busca e reutilização de pesquisas anteriores
               </li>
             </ul>
           </AccordionContent>
@@ -98,6 +103,14 @@ export function TabAbout() {
                 <li>Persistência de estado ao atualizar a página</li>
                 <li>Melhor usabilidade e SEO</li>
               </ul>
+            </div>
+
+            <div>
+              <strong>Histórico de buscas</strong>
+              <br />
+              Registro local das últimas buscas realizadas, com exibição do
+              tempo decorrido desde a consulta (ex: "5 minutos atrás"). Permite
+              reabrir rapidamente uma pesquisa anterior com um clique.
             </div>
 
             <div>

@@ -43,12 +43,34 @@ export function VehicleDetails({ details, yearCode }: Props) {
       )
       setDataPrice({
         ...res,
-        priceHistory: [...res.priceHistory].reverse(), // inverte os dados
+        priceHistory: [...res.priceHistory].reverse(),
       })
     }
 
     fetchPriceHistory()
   }, [details])
+
+  // salva no histórico
+  useEffect(() => {
+    const key = 'search-history'
+    const url = window.location.href
+    const existing = JSON.parse(localStorage.getItem(key) || '[]') as Array<{
+      key: number
+      label: string
+      url: string
+    }>
+
+    const newHistory = [
+      {
+        key: new Date().getTime(),
+        label: `${details.brand} - ${details.model} - ${details.modelYear}`,
+        url,
+      },
+      ...existing.filter((item) => item.url !== url),
+    ].slice(0, 10)
+
+    localStorage.setItem(key, JSON.stringify(newHistory))
+  }, [])
 
   return (
     <AnimatePresence mode="wait">

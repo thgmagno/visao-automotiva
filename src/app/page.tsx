@@ -2,6 +2,7 @@ import { actions } from '@/actions'
 import { Logotipo } from '@/components/Logotipo'
 import { AppTabs } from '@/components/tabs'
 import { TabAbout } from '@/components/tabs/TabAbout'
+import { TabHistorySearch } from '@/components/tabs/TabHistorySearch'
 import { TabVehicles } from '@/components/tabs/TabVehicles'
 import { VehicleDetails } from '@/components/VehicleDetails'
 import { SearchParams, VehicleType } from '@/lib/types'
@@ -30,6 +31,11 @@ export default async function Home(props: { searchParams: SearchParams }) {
       label: 'Caminhões',
       value: 'trucks',
       content: <TabVehicles type="trucks" {...getParams('trucks')} />,
+    },
+    {
+      label: 'Histórico de busca',
+      value: 'history',
+      content: <TabHistorySearch />,
     },
     { label: 'Sobre o projeto', value: 'about', content: <TabAbout /> },
   ]

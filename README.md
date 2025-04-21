@@ -12,6 +12,7 @@ Oferecer uma plataforma que permita ao usuário explorar e analisar dados de ve�
 - Visualização de modelos e versões por marca  
 - Consulta por ano/modelo com exibição de preço médio FIPE  
 - UI responsiva e intuitiva  
+- **Histórico de buscas** com tempo relativo e navegação rápida  
 
 ## Diferenciais
 
@@ -30,16 +31,19 @@ Por isso, o sistema utiliza **cache nativo do Next.js com tags únicas por requi
 ### Termos técnicos
 
 **URL State**  
-  Técnica que armazena o estado da interface diretamente na URL, usando query strings ou path dinâmico. Isso permite:
-  - Compartilhar links com filtros já aplicados (ex: seleção de modelo e ano)  
-  - Persistência de estado ao atualizar a página  
-  - Melhor usabilidade e SEO  
+Técnica que armazena o estado da interface diretamente na URL, usando query strings ou path dinâmico. Isso permite:
+- Compartilhar links com filtros já aplicados (ex: seleção de modelo e ano)  
+- Persistência de estado ao atualizar a página  
+- Melhor usabilidade e SEO  
+
+**Histórico de Buscas**  
+Registro local das últimas combinações de busca (ex: "Honda - Civic - 2022"), exibindo o tempo decorrido desde a consulta. Permite reabrir rapidamente uma pesquisa anterior com um clique.
 
 **API da Tabela FIPE (Parallelum)**  
-  Serviço gratuito que expõe os dados da Tabela FIPE por meio de endpoints REST. Permite consultar marcas, modelos, anos e valores médios de veículos. Possui limite de 1000 requisições diárias.  
+Serviço gratuito que expõe os dados da Tabela FIPE por meio de endpoints REST. Permite consultar marcas, modelos, anos e valores médios de veículos. Possui limite de 1000 requisições diárias.  
 
 **UI Responsiva**  
-  Interface adaptável a diferentes tamanhos de tela, garantindo boa experiência tanto em mobile quanto desktop.  
+Interface adaptável a diferentes tamanhos de tela, garantindo boa experiência tanto em mobile quanto desktop.  
 
 **Arquitetura Limpa (Clean Architecture)**  
-  Organização do código que separa responsabilidades (ex: domínio, aplicação, infraestrutura), facilitando manutenção, testes e escalabilidade.
+Organização do código que separa responsabilidades (ex: domínio, aplicação, infraestrutura), facilitando manutenção, testes e escalabilidade.
