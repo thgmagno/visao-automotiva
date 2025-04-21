@@ -1,6 +1,6 @@
 'use server'
 
-import { baseUrls } from '@/lib/baseUrl'
+import { baseUrlsV2 } from '@/lib/baseUrl'
 import { fetcher } from '@/lib/fetcher'
 import { mockCarBrands, mockCarModels, mockCarYears } from '@/lib/mock'
 import { ApiResponse } from '@/lib/types'
@@ -11,7 +11,7 @@ export async function getBrands(): ApiResponse {
     return normalize(mockCarBrands)
   }
 
-  return normalize(await fetcher(baseUrls.car, 'marcas'))
+  return normalize(await fetcher(baseUrlsV2.car, 'brands'))
 }
 
 export async function getModels(brandCode?: string): ApiResponse {
@@ -22,7 +22,7 @@ export async function getModels(brandCode?: string): ApiResponse {
   if (!brandCode) return []
 
   return normalize(
-    await fetcher(baseUrls.car, `marcas/${brandCode}/modelos`).then(
+    await fetcher(baseUrlsV2.car, `brands/${brandCode}/models`).then(
       (res) => res.modelos,
     ),
   )
@@ -40,8 +40,8 @@ export async function getYears(
 
   return normalize(
     await fetcher(
-      baseUrls.car,
-      `marcas/${brandCode}/modelos/${modelCode}/anos`,
+      baseUrlsV2.car,
+      `brands/${brandCode}/models/${modelCode}/years`,
     ),
   )
 }

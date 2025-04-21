@@ -41,10 +41,14 @@ export function Combobox({ idParam, options, dropdownSize = 'sm' }: Props) {
   const [mounted, setMounted] = React.useState(false)
   const [value, setValue] = React.useState('')
 
+  const paramsAvailable = ['tab', 'brand', 'model', 'year']
+
+  // controla a renderização do componente e evita layout shift
   React.useEffect(() => {
     setMounted(true)
   }, [])
 
+  // controla os valores dos inputs
   React.useEffect(() => {
     const selected = options.find(
       (option) => option.value === searchParams.get(idParam),
@@ -52,14 +56,38 @@ export function Combobox({ idParam, options, dropdownSize = 'sm' }: Props) {
     setValue(selected?.value || '')
   }, [searchParams, idParam, options])
 
+  // controla os parametros da url
   React.useEffect(() => {
     const params = new URLSearchParams(searchParams)
+
     if (value) {
+      params.set(idParam, value)
+      // Se for brand, remove model e year
+      if (idParam === 'brand') {
+        params.delete('model')
+        params.delete('year')
+      }
+
+      // Se for model, remove year
+      if (idParam === 'model') {
+        params.delete('year')
+      }
+
       params.set(idParam, value)
     } else {
       params.delete(idParam)
     }
-    replace(`${pathname}?${params.toString()}`)
+
+    // Reordena os params
+    const orderedParams = new URLSearchParams()
+    for (const key of paramsAvailable) {
+      const param = params.get(key)
+      if (param) {
+        orderedParams.set(key, param)
+      }
+    }
+
+    replace(`${pathname}?${orderedParams.toString()}`)
   }, [value])
 
   if (!mounted) {
