@@ -5,10 +5,10 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function normalize(values: { codigo: string | number; nome: string }[]) {
+export function normalize(values: { code: string | number; name: string }[]) {
   return values.map((value) => ({
-    codigo: String(value.codigo),
-    nome: String(value.nome)
+    code: String(value.code),
+    name: String(value.name)
       .split(' ')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(' '),

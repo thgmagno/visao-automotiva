@@ -13,18 +13,18 @@ export async function TabCars({ brand, model }: Props) {
   const yearData = await actions.cars.getYears(brand, model)
 
   const brands = brandData?.map((brand) => ({
-    value: brand.codigo,
-    label: brand.nome,
+    value: brand.code,
+    label: brand.name,
   }))
 
   const models = modelData?.map((model) => ({
-    value: model.codigo,
-    label: model.nome,
+    value: model.code,
+    label: model.name,
   }))
 
   const years = yearData?.map((year) => ({
-    value: year.codigo,
-    label: year.nome,
+    value: year.code,
+    label: year.name,
   }))
 
   return (
