@@ -2,6 +2,8 @@ export type SearchParams = Promise<{ [key: string]: string | undefined }>
 
 export type ApiResponse = Promise<{ code: string; name: string }[]>
 
+export type VehicleType = 'cars' | 'motorcycles' | 'trucks'
+
 export type VehicleDetailsType = {
   vehicleType: number
   price: string

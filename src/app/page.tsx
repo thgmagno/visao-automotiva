@@ -1,11 +1,9 @@
 import { actions } from '@/actions'
 import { Logotipo } from '@/components/Logotipo'
 import { AppTabs } from '@/components/tabs'
-import { TabCars } from '@/components/tabs/TabCars'
-import { TabMotos } from '@/components/tabs/TabMotos'
-import { TabTrucks } from '@/components/tabs/TabTrucks'
+import { TabVehicles } from '@/components/tabs/TabVehicles'
 import { VehicleDetails } from '@/components/VehicleDetails'
-import { SearchParams } from '@/lib/types'
+import { SearchParams, VehicleType } from '@/lib/types'
 
 export default async function Home(props: { searchParams: SearchParams }) {
   const searchParams = await props.searchParams
@@ -20,21 +18,35 @@ export default async function Home(props: { searchParams: SearchParams }) {
     {
       label: 'Carros',
       value: 'cars',
-      content: <TabCars {...getParams('cars')} />,
+      content: <TabVehicles type="cars" {...getParams('cars')} />,
     },
-    { label: 'Motos', value: 'motos', content: <TabMotos /> },
-    { label: 'Caminhões', value: 'trucks', content: <TabTrucks /> },
+    {
+      label: 'Motos',
+      value: 'motorcycles',
+      content: <TabVehicles type="motorcycles" {...getParams('motorcycles')} />,
+    },
+    {
+      label: 'Caminhões',
+      value: 'trucks',
+      content: <TabVehicles type="trucks" {...getParams('trucks')} />,
+    },
   ]
 
+  const vehicleType = searchParams.tab as VehicleType
   const { brand, model, year } = searchParams
 
   return (
     <main className="mx-auto mt-12 mb-36 w-[92%] max-w-xl space-y-8">
       <Logotipo />
       <AppTabs id="tab" items={tabs} />
-      {brand && model && year && (
+      {vehicleType && brand && model && year && (
         <VehicleDetails
-          details={await actions.details.getDetails(brand, model, year)}
+          details={await actions.vehicles.getDetails(
+            vehicleType,
+            brand,
+            model,
+            year,
+          )}
         />
       )}
     </main>
