@@ -43,6 +43,7 @@ export default async function Home(props: { searchParams: SearchParams }) {
       <AppTabs id="tab" items={tabs} />
       {vehicleType && brand && model && year && (
         <VehicleDetails
+          yearCode={year}
           details={await actions.vehicles.getDetails(
             vehicleType,
             brand,

@@ -2,7 +2,12 @@
 
 import { baseUrl } from '@/lib/baseUrl'
 import { fetcher } from '@/lib/fetcher'
-import { ApiResponse, VehicleDetailsType, VehicleType } from '@/lib/types'
+import {
+  ApiResponse,
+  PriceHistoryType,
+  VehicleDetailsType,
+  VehicleType,
+} from '@/lib/types'
 import { normalize } from '@/lib/utils'
 
 export async function getBrands(vehicleType: VehicleType): ApiResponse {
@@ -64,4 +69,27 @@ export async function getDetails(
     ],
     ['details', brandCode, modelCode, yearCode],
   )
+}
+
+export async function getPriceHistory(
+  vehicleType: VehicleType,
+  fipeCode: string,
+  yearCode: string,
+): Promise<PriceHistoryType> {
+  const res: PriceHistoryType = await fetcher(
+    [baseUrl, vehicleType, fipeCode, 'years', yearCode, 'history'],
+    ['history', fipeCode, yearCode],
+  )
+
+  return {
+    priceHistory: res.priceHistory.map((item) => ({
+      ...item,
+      priceNumeric: parseFloat(
+        item.price
+          .replaceAll('.', '')
+          .replace(/[^\d,]/g, '')
+          .replace(',', '.'),
+      ),
+    })),
+  }
 }

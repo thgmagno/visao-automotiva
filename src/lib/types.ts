@@ -15,3 +15,12 @@ export type VehicleDetailsType = {
   referenceMonth: string
   fuelAcronym: string
 }
+
+export type PriceHistoryType = {
+  priceHistory: {
+    price: string
+    priceNumeric: number
+    month: string
+    reference: string
+  }[]
+}
