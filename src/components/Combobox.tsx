@@ -28,11 +28,18 @@ type Option = {
 interface Props {
   idParam: string
   options: Option[]
+  placeholder: string
   disabled?: boolean
   limited?: boolean
 }
 
-export function Combobox({ idParam, options, disabled, limited }: Props) {
+export function Combobox({
+  idParam,
+  options,
+  placeholder,
+  disabled,
+  limited,
+}: Props) {
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()
@@ -107,7 +114,7 @@ export function Combobox({ idParam, options, disabled, limited }: Props) {
         >
           {value
             ? options.find((option) => option.value === value)?.label
-            : 'Selecionar opção...'}
+            : placeholder}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>

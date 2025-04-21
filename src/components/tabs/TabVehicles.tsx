@@ -31,9 +31,25 @@ export async function TabVehicles({ type, brand, model }: Props) {
 
   return (
     <div className="searchbar-container">
-      <Combobox options={brands} idParam="brand" limited />
-      <Combobox options={models} idParam="model" disabled={!brand} limited />
-      <Combobox options={years} idParam="year" disabled={!model} />
+      <Combobox
+        options={brands}
+        idParam="brand"
+        placeholder="Marca do veículo"
+        limited
+      />
+      <Combobox
+        options={models}
+        idParam="model"
+        placeholder="Modelo do veículo"
+        disabled={!brand}
+        limited
+      />
+      <Combobox
+        options={years}
+        idParam="year"
+        placeholder="Ano do veículo"
+        disabled={!model}
+      />
       <ResetFiltersButton type={type} disabled={!brand && !model} />
     </div>
   )
