@@ -21,7 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className={`${montserrat.variable} antialiased`}>
+      <body
+        className={`${montserrat.variable} mx-auto flex min-h-screen w-[92%] max-w-5xl flex-col pt-12 antialiased`}
+      >
         <Providers
           ipInfoToken={process.env.IPINFO_TOKEN!}
           appToken={process.env.APP_TOKEN!}

@@ -96,7 +96,7 @@
   }
 
   .searchbar-container {
-    @apply my-4 flex gap-2 flex-col
+    @apply my-4 flex gap-2 flex-col lg:flex-row
   }
 
   .no-scrollbar {

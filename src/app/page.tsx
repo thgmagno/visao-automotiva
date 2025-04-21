@@ -1,6 +1,7 @@
 import { actions } from '@/actions'
 import { Logotipo } from '@/components/Logotipo'
 import { AppTabs } from '@/components/tabs'
+import { TabAbout } from '@/components/tabs/TabAbout'
 import { TabVehicles } from '@/components/tabs/TabVehicles'
 import { VehicleDetails } from '@/components/VehicleDetails'
 import { SearchParams, VehicleType } from '@/lib/types'
@@ -30,13 +31,14 @@ export default async function Home(props: { searchParams: SearchParams }) {
       value: 'trucks',
       content: <TabVehicles type="trucks" {...getParams('trucks')} />,
     },
+    { label: 'Sobre o projeto', value: 'about', content: <TabAbout /> },
   ]
 
   const vehicleType = searchParams.tab as VehicleType
   const { brand, model, year } = searchParams
 
   return (
-    <main className="mx-auto mt-12 mb-36 w-[92%] max-w-xl space-y-8">
+    <main className="flex-1 space-y-8 pb-12">
       <Logotipo />
       <AppTabs id="tab" items={tabs} />
       {vehicleType && brand && model && year && (

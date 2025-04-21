@@ -3,7 +3,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useSearchParams, usePathname, useRouter } from 'next/navigation'
 import { useEffect, useMemo } from 'react'
-import { Button } from '@/components/ui/button'
 
 type TabItem = {
   label: string
@@ -40,16 +39,9 @@ export function AppTabs({ id, items }: AppTabsProps) {
     replace(`${pathname}?${params.toString()}`)
   }
 
-  const reset = () => {
-    const tab = searchParams.get('tab')
-    const params = new URLSearchParams()
-    params.set('tab', tab ?? 'cars')
-    replace(`${pathname}?${params.toString()}`)
-  }
-
   return (
     <Tabs value={selected} onValueChange={handleChange}>
-      <div className="no-scrollbar flex justify-between overflow-x-scroll">
+      <div className="no-scrollbar flex justify-between overflow-scroll">
         <TabsList>
           {items.map((item) => (
             <TabsTrigger key={item.value} value={item.value}>
@@ -63,11 +55,6 @@ export function AppTabs({ id, items }: AppTabsProps) {
           {item.content}
         </TabsContent>
       ))}
-      {(searchParams.has('model') || searchParams.has('year')) && (
-        <Button onClick={reset} variant="outline">
-          Limpar filtros
-        </Button>
-      )}
     </Tabs>
   )
 }

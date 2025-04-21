@@ -1,5 +1,4 @@
 # Visão Automotiva
-## (Em desenvolvimento)
 
 **Visão Automotiva** é uma aplicação web focada em análise de dados veiculares no Brasil. Utilizando a API da Tabela FIPE (Parallelum), o sistema fornece uma visão clara e organizada de preços médios, marcas, modelos e variações ao longo do tempo.
 

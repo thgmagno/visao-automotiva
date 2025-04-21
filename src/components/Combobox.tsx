@@ -28,9 +28,11 @@ type Option = {
 interface Props {
   idParam: string
   options: Option[]
+  disabled?: boolean
+  limited?: boolean
 }
 
-export function Combobox({ idParam, options }: Props) {
+export function Combobox({ idParam, options, disabled, limited }: Props) {
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()
@@ -38,6 +40,7 @@ export function Combobox({ idParam, options }: Props) {
   const [open, setOpen] = React.useState(false)
   const [mounted, setMounted] = React.useState(false)
   const [value, setValue] = React.useState('')
+  const [searchTerm, setSearchTerm] = React.useState('')
 
   const paramsAvailable = ['tab', 'brand', 'model', 'year']
 
@@ -57,6 +60,7 @@ export function Combobox({ idParam, options }: Props) {
   // controla os parametros da url
   React.useEffect(() => {
     const params = new URLSearchParams(searchParams)
+    setSearchTerm('')
 
     if (value) {
       params.set(idParam, value)
@@ -94,12 +98,12 @@ export function Combobox({ idParam, options }: Props) {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
+      <PopoverTrigger asChild disabled={disabled}>
         <Button
           variant="secondary"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between"
+          className="flex-1 justify-between"
         >
           {value
             ? options.find((option) => option.value === value)?.label
@@ -107,32 +111,41 @@ export function Combobox({ idParam, options }: Props) {
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="min-w-[90vw] p-0 md:min-w-xl">
+      <PopoverContent>
         <Command shouldFilter={true}>
-          <CommandInput placeholder="Pesquisar..." />
-          <CommandList>
-            <CommandEmpty>Nenhuma opção encontrada.</CommandEmpty>
-            <CommandGroup>
-              {options.map((option) => (
-                <CommandItem
-                  key={option.value}
-                  value={option.label}
-                  onSelect={() => {
-                    setValue(option.value === value ? '' : option.value)
-                    setOpen(false)
-                  }}
-                >
-                  <Check
-                    className={cn(
-                      'mr-2 h-4 w-4',
-                      value === option.value ? 'opacity-100' : 'opacity-0',
-                    )}
-                  />
-                  {option.label}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
+          <CommandInput
+            placeholder="Digite para pesquisar..."
+            onValueChange={(text) => setSearchTerm(text)}
+          />
+          {searchTerm.length >= (limited ? 3 : 0) ? (
+            <CommandList>
+              <CommandEmpty>Nenhuma opção encontrada.</CommandEmpty>
+              <CommandGroup>
+                {options.map((option) => (
+                  <CommandItem
+                    key={option.value}
+                    value={option.label}
+                    onSelect={() => {
+                      setValue(option.value === value ? '' : option.value)
+                      setOpen(false)
+                    }}
+                  >
+                    <Check
+                      className={cn(
+                        'mr-2 h-4 w-4',
+                        value === option.value ? 'opacity-100' : 'opacity-0',
+                      )}
+                    />
+                    {option.label}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          ) : (
+            <p className="text-muted-foreground p-2 text-sm">
+              Digite pelo menos 3 caracteres...
+            </p>
+          )}
         </Command>
       </PopoverContent>
     </Popover>

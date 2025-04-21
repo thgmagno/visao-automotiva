@@ -1,6 +1,7 @@
 import { actions } from '@/actions'
 import { Combobox } from '@/components/Combobox'
 import { VehicleType } from '@/lib/types'
+import { ResetFiltersButton } from './ResetFiltersButton'
 
 interface Props {
   type: VehicleType
@@ -30,9 +31,10 @@ export async function TabVehicles({ type, brand, model }: Props) {
 
   return (
     <div className="searchbar-container">
-      <Combobox options={brands} idParam="brand" />
-      {brand && <Combobox options={models} idParam="model" />}
-      {brand && model && <Combobox options={years} idParam="year" />}
+      <Combobox options={brands} idParam="brand" limited />
+      <Combobox options={models} idParam="model" disabled={!brand} limited />
+      <Combobox options={years} idParam="year" disabled={!model} />
+      <ResetFiltersButton type={type} disabled={!brand && !model} />
     </div>
   )
 }
