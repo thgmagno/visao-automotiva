@@ -2,28 +2,20 @@
 
 import { baseUrls } from '@/lib/baseUrl'
 import { fetcher } from '@/lib/fetcher'
-import { mockCarBrands, mockCarModels, mockCarYears } from '@/lib/mock'
 import { ApiResponse } from '@/lib/types'
 import { normalize } from '@/lib/utils'
 
 export async function getBrands(): ApiResponse {
-  if (process.env.NODE_ENV !== 'production') {
-    return normalize(mockCarBrands)
-  }
-
-  return normalize(await fetcher(baseUrls.car, 'brands'))
+  return normalize(await fetcher([baseUrls.car, 'brands'], ['brands']))
 }
 
 export async function getModels(brandCode?: string): ApiResponse {
-  if (process.env.NODE_ENV !== 'production') {
-    return normalize(mockCarModels.modelos)
-  }
-
   if (!brandCode) return []
 
   return normalize(
-    await fetcher(baseUrls.car, `brands/${brandCode}/models`).then(
-      (res) => res.modelos,
+    await fetcher(
+      [baseUrls.car, 'brands', brandCode, 'models'],
+      ['models', brandCode],
     ),
   )
 }
@@ -32,16 +24,19 @@ export async function getYears(
   brandCode?: string,
   modelCode?: string,
 ): ApiResponse {
-  if (process.env.NODE_ENV !== 'production') {
-    return normalize(mockCarYears)
-  }
-
   if (!brandCode || !modelCode) return []
 
-  return normalize(
+  const years = normalize(
     await fetcher(
-      baseUrls.car,
-      `brands/${brandCode}/models/${modelCode}/years`,
+      [baseUrls.car, 'brands', brandCode, 'models', modelCode, 'years'],
+      ['years', brandCode, modelCode],
     ),
   )
+
+  const anoAtual = new Date().getFullYear()
+
+  return years.filter(({ code }) => {
+    const ano = parseInt(code.split('-')[0], 10)
+    return ano >= 1980 && ano <= anoAtual + 1
+  })
 }

@@ -19,7 +19,6 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import clsx from 'clsx'
 
 type Option = {
   value: string
@@ -29,10 +28,9 @@ type Option = {
 interface Props {
   idParam: string
   options: Option[]
-  dropdownSize?: 'sm' | 'md' | 'lg'
 }
 
-export function Combobox({ idParam, options, dropdownSize = 'sm' }: Props) {
+export function Combobox({ idParam, options }: Props) {
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()
@@ -91,9 +89,7 @@ export function Combobox({ idParam, options, dropdownSize = 'sm' }: Props) {
   }, [value])
 
   if (!mounted) {
-    return (
-      <div className="bg-secondary h-9 w-full animate-pulse rounded-md md:w-44" />
-    )
+    return <div className="bg-secondary h-9 w-full animate-pulse rounded-md" />
   }
 
   return (
@@ -103,7 +99,7 @@ export function Combobox({ idParam, options, dropdownSize = 'sm' }: Props) {
           variant="secondary"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between md:w-fit"
+          className="w-full justify-between"
         >
           {value
             ? options.find((option) => option.value === value)?.label
@@ -111,13 +107,7 @@ export function Combobox({ idParam, options, dropdownSize = 'sm' }: Props) {
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent
-        className={clsx('w-[90vw] p-0', {
-          'md:max-w-[200px]': dropdownSize === 'sm',
-          'md:max-w-[240px]': dropdownSize === 'md',
-          'md:max-w-sm': dropdownSize === 'lg',
-        })}
-      >
+      <PopoverContent className="min-w-[90vw] p-0 md:min-w-xl">
         <Command shouldFilter={true}>
           <CommandInput placeholder="Pesquisar..." />
           <CommandList>

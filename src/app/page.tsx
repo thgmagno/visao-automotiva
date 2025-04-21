@@ -1,7 +1,10 @@
+import { actions } from '@/actions'
+import { Logotipo } from '@/components/Logotipo'
 import { AppTabs } from '@/components/tabs'
 import { TabCars } from '@/components/tabs/TabCars'
 import { TabMotos } from '@/components/tabs/TabMotos'
 import { TabTrucks } from '@/components/tabs/TabTrucks'
+import { VehicleDetails } from '@/components/VehicleDetails'
 import { SearchParams } from '@/lib/types'
 
 export default async function Home(props: { searchParams: SearchParams }) {
@@ -16,17 +19,24 @@ export default async function Home(props: { searchParams: SearchParams }) {
   const tabs = [
     {
       label: 'Carros',
-      value: 'carros',
-      content: <TabCars {...getParams('carros')} />,
+      value: 'cars',
+      content: <TabCars {...getParams('cars')} />,
     },
     { label: 'Motos', value: 'motos', content: <TabMotos /> },
-    { label: 'Caminhões', value: 'caminhoes', content: <TabTrucks /> },
+    { label: 'Caminhões', value: 'trucks', content: <TabTrucks /> },
   ]
 
+  const { brand, model, year } = searchParams
+
   return (
-    <main className="mx-auto mt-12 mb-36 w-[92%] max-w-7xl space-y-8">
-      <h1>Visão Automotiva</h1>
+    <main className="mx-auto mt-12 mb-36 w-[92%] max-w-xl space-y-8">
+      <Logotipo />
       <AppTabs id="tab" items={tabs} />
+      {brand && model && year && (
+        <VehicleDetails
+          details={await actions.details.getDetails(brand, model, year)}
+        />
+      )}
     </main>
   )
 }
