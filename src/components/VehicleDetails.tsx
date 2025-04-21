@@ -87,7 +87,7 @@ export function VehicleDetails({ details, yearCode }: Props) {
             transition={{ duration: 0.5, ease: 'easeInOut' }}
             className="bg-card w-full max-w-xl space-y-3 rounded-2xl p-6 shadow-xl xl:max-w-sm"
           >
-            <h3 className="text-center text-xl font-bold">
+            <h3 className="text-muted-foreground text-center text-2xl font-bold xl:text-xl">
               Histórico de Preços
             </h3>
             <ChartContainer config={{}}>
